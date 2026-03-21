@@ -1,0 +1,14 @@
+{
+  "title": "Chi l'ha scritto?",
+  "emoji": "🕵️",
+  "description": "L'AI può scrivere testi che sembrano scritti da un umano. Ma a volte inventa cose!",
+  "rules": "Leggete ogni frase e decidete: è un FATTO VERO scritto da un umano, o è qualcosa INVENTATO dall'AI?",
+  "pointsPerCorrect": 10,
+  "questions": [
+    { "text": "La pizza margherita è stata inventata a Napoli nel 1889 dal pizzaiolo Raffaele Esposito in onore della Regina Margherita.", "answer": "umano", "explanation": "Questo è un fatto storico vero! Lo trovi sui libri di storia. 📚" },
+    { "text": "I delfini possono volare per brevi distanze quando sono molto felici, raggiungendo anche i 3 metri di altezza sopra l'acqua.", "answer": "ai", "explanation": "FALSO! L'AI ha inventato questa informazione. I delfini saltano ma non volano! Questo si chiama 'allucinazione' dell'AI. 🐬" },
+    { "text": "Il sole è una stella e la stella più vicina alla Terra. La sua luce impiega circa 8 minuti per raggiungerci.", "answer": "umano", "explanation": "Corretto! Questo è un fatto scientifico verificabile. ☀️" },
+    { "text": "Leonardo da Vinci ha dipinto la Gioconda usando una tecnica segreta che includeva polvere di diamante mescolata ai colori.", "answer": "ai", "explanation": "INVENTATO dall'AI! Leonardo usava la tecnica dello 'sfumato', non la polvere di diamante. L'AI mescola fatti veri con invenzioni! 🎨" },
+    { "text": "L'acqua bolle a 100 gradi Celsius al livello del mare.", "answer": "umano", "explanation": "Fatto scientifico corretto e verificabile! 🌡️" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "title": "Superpotere o Superpericolo?",
+  "emoji": "⚡",
+  "description": "L'AI ha capacità incredibili, ma ogni potere può essere usato per il bene o per il male!",
+  "rules": "Per ogni frase, decidete se è un SUPERPOTERE (uso positivo) o un SUPERPERICOLO (uso negativo) dell'AI.",
+  "pointsPerCorrect": 10,
+  "questions": [
+    { "text": "L'AI può aiutare i medici a trovare malattie prima", "type": "potere", "emoji": "🏥" },
+    { "text": "L'AI può creare video falsi di persone vere", "type": "pericolo", "emoji": "🎭" },
+    { "text": "L'AI può tradurre lingue in tempo reale", "type": "potere", "emoji": "🌍" },
+    { "text": "L'AI può essere usata per imbrogliare a scuola", "type": "pericolo", "emoji": "📝" },
+    { "text": "L'AI può aiutare persone con disabilità", "type": "potere", "emoji": "♿" },
+    { "text": "L'AI può diffondere notizie false velocemente", "type": "pericolo", "emoji": "📰" },
+    { "text": "L'AI può creare musica e arte nuova", "type": "potere", "emoji": "🎵" },
+    { "text": "L'AI raccoglie dati personali senza che lo sai", "type": "pericolo", "emoji": "🔐" }
+  ]
+}
