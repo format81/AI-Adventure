@@ -1,0 +1,14 @@
+﻿services:
+  ai-avventura:
+    build: .
+    ports:
+      - "${PORT:-8080}:8080"
+    environment:
+      - ADMIN_USERS=${ADMIN_USERS}
+      - DEMO_PASSWORD=${DEMO_PASSWORD}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - NODE_ENV=production
+    volumes:
+      - ./data:/app/data
+      - ./content:/app/content
+    restart: unless-stopped
