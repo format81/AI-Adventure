@@ -1,0 +1,15 @@
+{
+  "title": "Semaforo AI",
+  "emoji": "🚦",
+  "description": "Non tutti gli usi dell'AI sono uguali. Alcuni sono fantastici, altri pericolosi!",
+  "rules": "Per ogni situazione, scegliete il colore del semaforo: 🟢 VERDE = Ottimo uso! 🟡 GIALLO = Attenzione! 🔴 ROSSO = Pericolo!",
+  "pointsPerCorrect": 10,
+  "questions": [
+    { "scenario": "Usi l'AI per farti spiegare un argomento di scienze che non hai capito bene.", "answer": "verde", "explanation": "L'AI è un ottimo tutor! Ti può spiegare le cose in modi diversi finché non capisci. 💡" },
+    { "scenario": "Copi e incolli un tema scritto dall'AI e lo consegni alla maestra come se fosse tuo.", "answer": "rosso", "explanation": "Questo è BARARE! Il compito deve essere il TUO lavoro. L'AI può aiutarti a capire, ma non deve fare il lavoro al posto tuo. 🚫" },
+    { "scenario": "Chiedi all'AI di darti idee per una storia che poi scrivi tu con le tue parole.", "answer": "verde", "explanation": "Perfetto! Usare l'AI per ispirarsi e poi creare qualcosa di proprio è un uso intelligente! ✨" },
+    { "scenario": "Un amico ti manda una foto di un compagno di classe modificata con l'AI per prenderlo in giro.", "answer": "rosso", "explanation": "Questo è CYBERBULLISMO! Modificare foto di altre persone con l'AI per offenderle è molto grave e fa male. 💔" },
+    { "scenario": "Usi l'AI per tradurre una frase in inglese, ma poi controlli sul dizionario se è giusta.", "answer": "giallo", "explanation": "Buona idea controllare! L'AI a volte sbaglia le traduzioni. Verificare è sempre importante! 🔍" },
+    { "scenario": "Credi a tutto quello che l'AI ti dice senza mai verificare.", "answer": "rosso", "explanation": "L'AI può INVENTARE cose che sembrano vere! Bisogna sempre verificare le informazioni importanti. 🧐" }
+  ]
+}

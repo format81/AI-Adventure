@@ -1,0 +1,29 @@
+{
+  "title": "Detective delle Fake",
+  "emoji": "🔎",
+  "description": "L'AI può creare notizie false molto convincenti. Un buon detective digitale sa riconoscere gli indizi!",
+  "rules": "Leggete la notizia e trovate i 2 INDIZI SOSPETTI che rivelano che è una fake news.",
+  "pointsPerCorrect": 15,
+  "questions": [
+    {
+      "claim": "ULTIM'ORA: Domani scuole chiuse in tutta Italia per l'arrivo di un meteorite! Lo dice il Presidente!",
+      "options": [
+        { "id": 0, "text": "📅 'Domani' — la data è troppo vicina", "isFake": false },
+        { "id": 1, "text": "☄️ 'Arrivo di un meteorite' — troppo sensazionale", "isFake": true },
+        { "id": 2, "text": "🏫 'Scuole chiuse' — potrebbe essere vero", "isFake": false },
+        { "id": 3, "text": "🗣️ 'Lo dice il Presidente' — non cita la fonte vera", "isFake": true }
+      ],
+      "explanation": "Le notizie false usano toni SENSAZIONALI e citano fonti vaghe. Chiedi sempre: dove posso verificare? 🔎"
+    },
+    {
+      "claim": "Un nuovo studio scientifico dimostra che mangiare cioccolato ogni giorno fa diventare più intelligenti del 200%!",
+      "options": [
+        { "id": 0, "text": "🔬 'Un nuovo studio' — non dice quale studio", "isFake": true },
+        { "id": 1, "text": "🍫 'Cioccolato' — il cioccolato esiste davvero", "isFake": false },
+        { "id": 2, "text": "📊 '200%' — numero esagerato e impossibile", "isFake": true },
+        { "id": 3, "text": "🧠 'Intelligenti' — l'intelligenza è reale", "isFake": false }
+      ],
+      "explanation": "Numeri esagerati e fonti vaghe ('un nuovo studio...') sono segnali di fake news! 🚩"
+    }
+  ]
+}
