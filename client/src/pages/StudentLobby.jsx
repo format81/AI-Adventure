@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSSE } from '../hooks/useSSE';
 import { apiFetch } from '../lib/api';
+import { useI18n } from '../i18n/I18nContext';
 
 const s = {
   container: { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', animation: 'fadeIn 0.5s ease' },
@@ -14,6 +15,7 @@ const s = {
 export default function StudentLobby() {
   const { sessionCode } = useParams();
   const navigate = useNavigate();
+  const { t } = useI18n();
   const [teams, setTeams] = useState([]);
   const [dots, setDots] = useState('.');
 
@@ -60,26 +62,26 @@ export default function StudentLobby() {
     <div style={s.container}>
       <div style={s.card}>
         <span style={s.robot}>🤖</span>
-        <h1 style={s.title}>La maestra sta per iniziare{dots}</h1>
+        <h1 style={s.title}>{t('student.waitingTeacher')}{dots}</h1>
         <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.6)', marginBottom: '24px' }}>
-          Squadra: <strong style={{ color: '#FFE66D' }}>{teamInfo.teamName}</strong>
+          {t('app.team')}: <strong style={{ color: '#FFE66D' }}>{teamInfo.teamName}</strong>
         </p>
 
         {teams.length > 0 && (
           <div>
             <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.5)', marginBottom: '12px' }}>
-              Squadre collegate:
+              {t('student.connectedTeams')}
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
-              {teams.map((t, i) => (
-                <span key={i} style={s.teamBadge}>👥 {t}</span>
+              {teams.map((tm, i) => (
+                <span key={i} style={s.teamBadge}>👥 {tm}</span>
               ))}
             </div>
           </div>
         )}
 
         <div style={{ marginTop: '32px', padding: '16px', background: 'rgba(167,139,250,0.1)', borderRadius: '12px', fontSize: '16px', color: '#A78BFA' }}>
-          💡 Preparatevi! Tra poco inizia l'avventura nel mondo dell'AI!
+          💡 {t('student.getReady')}
         </div>
       </div>
     </div>

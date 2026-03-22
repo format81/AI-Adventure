@@ -1,0 +1,144 @@
+{
+  "app": {
+    "title": "AI Adventure",
+    "subtitle": "Discover the world of Artificial Intelligence!",
+    "loading": "Loading...",
+    "points": "points",
+    "pt": "pt",
+    "team": "Team",
+    "teams": "teams",
+    "session": "Session",
+    "backHome": "Back to home",
+    "code": "CODE"
+  },
+  "landing": {
+    "enterAdventure": "Enter the adventure!",
+    "iAmTeacher": "I am a teacher",
+    "demoMode": "Demo Mode"
+  },
+  "admin": {
+    "title": "Teacher Area",
+    "subtitle": "Log in to manage sessions",
+    "username": "Username",
+    "password": "Password",
+    "loggingIn": "Logging in...",
+    "login": "Log in",
+    "console": "Teacher Console",
+    "newSession": "New Session",
+    "logout": "Log out",
+    "createSession": "Create new session",
+    "sessionPlaceholder": "e.g. Class 4B - Green School",
+    "create": "Create",
+    "cancel": "Cancel",
+    "noSessions": "No sessions yet. Create your first!",
+    "codeLabel": "Code",
+    "deleteConfirm": "Delete this session and all associated data?",
+    "backToList": "Back to list",
+    "shareCode": "Share this code with your class",
+    "control": "Control",
+    "teamsConnected": "teams connected",
+    "startSession": "START SESSION",
+    "currentStage": "Current stage",
+    "intro": "Introduction",
+    "finale": "Finale",
+    "questionOf": "Question {current} of {total}",
+    "responsesReceived": "Responses received",
+    "startGame": "Start Game {n}",
+    "nextQuestion": "Next question",
+    "goToFinale": "Go to Finale",
+    "goTo": "Go to {name}",
+    "completeSession": "Complete Session",
+    "pause": "Pause",
+    "resume": "Resume",
+    "sessionComplete": "Session completed!",
+    "viewResults": "View Results",
+    "exportCSV": "Export CSV",
+    "scoreboard": "Scoreboard",
+    "noScoresYet": "No scores yet",
+    "detailedResults": "Detailed Results",
+    "correctByGame": "Correct answers percentage by game",
+    "downloadFullCSV": "Download full CSV"
+  },
+  "demo": {
+    "title": "Demo Mode",
+    "subtitle": "Enter the password to try the games",
+    "passwordPlaceholder": "Demo password",
+    "verifying": "Verifying...",
+    "startDemo": "Start Demo",
+    "introTitle": "AI Adventure \u2014 Demo",
+    "introDesc": "Discover how Artificial Intelligence works through 4 interactive games!",
+    "startAdventure": "Start the adventure!",
+    "backHome": "Back to home",
+    "nextQuestion": "Next question",
+    "nextGame": "Next game",
+    "seeResults": "See results"
+  },
+  "student": {
+    "joinTitle": "Join the Adventure!",
+    "sessionLabel": "Session:",
+    "teamPlaceholder": "Team name",
+    "connecting": "Connecting...",
+    "enter": "Enter!",
+    "waitingTeacher": "The teacher is about to start",
+    "connectedTeams": "Connected teams:",
+    "getReady": "Get ready! The AI adventure is about to begin!",
+    "readyTitle": "Ready for the adventure!",
+    "teacherPreparing": "The teacher is preparing the next game...",
+    "gameNotFound": "Game not found",
+    "waitingNextQ": "Waiting for the next question...",
+    "waitTeacher": "Wait for the next question from the teacher...",
+    "paused": "Paused!",
+    "pausedMsg": "The teacher has paused the session. Wait a moment...",
+    "questionLabel": "Question {current} of {total}"
+  },
+  "finale": {
+    "title": "Adventure Completed!",
+    "champion": "You are AI CHAMPIONS!",
+    "great": "Great job, experts in training!",
+    "good": "Good start! The important thing is to learn!",
+    "keepGoing": "Keep exploring the world of AI!",
+    "totalPoints": "Total points",
+    "correctAnswers": "Correct answers",
+    "closingMessage": "Remember: AI is a powerful tool. Use it wisely, always verify information, and don't forget to think with your own head!"
+  },
+  "game1": {
+    "human": "Written by a HUMAN",
+    "ai": "Made up by AI"
+  },
+  "game2": {
+    "green": "GREEN \u2014 Great!",
+    "yellow": "YELLOW \u2014 Caution!",
+    "red": "RED \u2014 Danger!"
+  },
+  "game3": {
+    "newsLabel": "NEWS:",
+    "selectClues": "Select 2 suspicious clues ({count}/2)",
+    "confirmClues": "Confirm clues"
+  },
+  "game4": {
+    "superpower": "SUPERPOWER",
+    "superdanger": "SUPERDANGER"
+  },
+  "status": {
+    "lobby": "Waiting",
+    "active": "Active",
+    "paused": "Paused",
+    "completed": "Completed"
+  },
+  "errors": {
+    "networkError": "Network error",
+    "errorCode": "Error {code}"
+  },
+  "csv": {
+    "team": "Team",
+    "game": "Game",
+    "question": "Question",
+    "answer": "Answer",
+    "correct": "Correct",
+    "points": "Points",
+    "date": "Date",
+    "yes": "Yes",
+    "no": "No",
+    "filename": "results"
+  }
+}

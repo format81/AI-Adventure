@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiFetch } from '../lib/api';
+import { useI18n } from '../i18n/I18nContext';
 import ProgressBar from '../components/ProgressBar';
 import Finale from '../components/Finale';
 import Game1WhoWroteIt from '../components/games/Game1WhoWroteIt';
@@ -23,12 +24,13 @@ export default function DemoMode() {
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   useEffect(() => {
     apiFetch('/game/content').then(setContent).catch(() => {});
   }, []);
 
-  if (!content) return <div style={{ textAlign: 'center', padding: '60px', fontSize: '24px' }}>⏳ Caricamento...</div>;
+  if (!content) return <div style={{ textAlign: 'center', padding: '60px', fontSize: '24px' }}>⏳ {t('app.loading')}</div>;
 
   const stage = STAGES[stageIdx];
   const gameKey = stage.startsWith('game') ? stage : null;
@@ -76,7 +78,6 @@ export default function DemoMode() {
       setShowResult(false);
       setResult(null);
     } else {
-      // Next stage
       setStageIdx(stageIdx + 1);
       setQuestionIdx(0);
       setShowResult(false);
@@ -93,10 +94,10 @@ export default function DemoMode() {
         <div style={{ ...card, textAlign: 'center', animation: 'fadeIn 0.5s ease' }}>
           <div style={{ fontSize: '72px', marginBottom: '16px' }}>🤖</div>
           <h1 style={{ fontSize: '36px', fontWeight: 900, marginBottom: '12px', background: 'linear-gradient(135deg, #F97316, #FFE66D)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            AI Avventura — Demo
+            {t('demo.introTitle')}
           </h1>
           <p style={{ fontSize: '20px', color: 'rgba(255,255,255,0.7)', marginBottom: '12px', lineHeight: 1.6 }}>
-            Scopri come funziona l'Intelligenza Artificiale attraverso 4 giochi interattivi!
+            {t('demo.introDesc')}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '32px', textAlign: 'left', maxWidth: '400px', margin: '0 auto 32px' }}>
             {[content.game1, content.game2, content.game3, content.game4].map((g, i) => (
@@ -105,7 +106,7 @@ export default function DemoMode() {
               </div>
             ))}
           </div>
-          <button onClick={handleNext} style={btnPrimary}>🚀 Inizia l'avventura!</button>
+          <button onClick={handleNext} style={btnPrimary}>🚀 {t('demo.startAdventure')}</button>
         </div>
       </div>
     );
@@ -118,7 +119,7 @@ export default function DemoMode() {
         <div style={card}>
           <Finale totalPoints={totalPoints} totalCorrect={totalCorrect} totalQuestions={totalQuestions} />
           <div style={{ textAlign: 'center', marginTop: '24px' }}>
-            <button onClick={() => navigate('/')} style={btnPrimary}>🏠 Torna alla home</button>
+            <button onClick={() => navigate('/')} style={btnPrimary}>🏠 {t('demo.backHome')}</button>
           </div>
         </div>
       </div>
@@ -136,13 +137,13 @@ export default function DemoMode() {
           <div style={{ fontSize: '16px', color: '#A78BFA', fontWeight: 700, marginBottom: '4px' }}>
             {gameData.emoji} {gameData.title}
           </div>
-          <ProgressBar current={questionIdx + 1} total={questions.length} label={`Domanda ${questionIdx + 1} di ${questions.length}`} />
+          <ProgressBar current={questionIdx + 1} total={questions.length} label={t('student.questionLabel', { current: questionIdx + 1, total: questions.length })} />
           <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)' }}>{gameData.rules}</div>
         </div>
 
         {/* Score */}
         <div style={{ textAlign: 'center', marginBottom: '20px', fontSize: '20px', fontWeight: 800, color: '#FFE66D' }}>
-          ⭐ {totalPoints} punti
+          ⭐ {totalPoints} {t('app.points')}
         </div>
 
         {/* Game component */}
@@ -153,10 +154,10 @@ export default function DemoMode() {
           <div style={{ textAlign: 'center', marginTop: '24px' }}>
             <button onClick={handleNext} style={btnPrimary}>
               {showResult && questionIdx < questions.length - 1
-                ? '➡️ Prossima domanda'
+                ? `➡️ ${t('demo.nextQuestion')}`
                 : stageIdx < STAGES.length - 2
-                  ? '🎮 Prossimo gioco'
-                  : '🏆 Vedi i risultati'}
+                  ? `🎮 ${t('demo.nextGame')}`
+                  : `🏆 ${t('demo.seeResults')}`}
             </button>
           </div>
         )}

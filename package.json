@@ -1,8 +1,8 @@
 {
-  "name": "ai-avventura",
+  "name": "ai-adventure",
   "version": "1.0.0",
   "private": true,
-  "description": "AI Avventura - Educational gamified app about generative AI",
+  "description": "AI Adventure - Educational gamified app about generative AI for children",
   "workspaces": ["server", "client"],
   "scripts": {
     "dev:server": "cd server && node index.js",

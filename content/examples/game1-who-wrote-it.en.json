@@ -1,0 +1,14 @@
+{
+  "title": "Who Wrote It?",
+  "emoji": "🕵️",
+  "description": "AI can write texts that look like a human wrote them. But sometimes it makes things up!",
+  "rules": "Read each sentence and decide: is it a TRUE FACT written by a human, or something MADE UP by AI?",
+  "pointsPerCorrect": 10,
+  "questions": [
+    { "text": "The Margherita pizza was invented in Naples in 1889 by pizza maker Raffaele Esposito in honor of Queen Margherita.", "answer": "umano", "explanation": "This is a true historical fact! You can find it in history books. 📚" },
+    { "text": "Dolphins can fly for short distances when they are very happy, reaching up to 3 meters above the water.", "answer": "ai", "explanation": "FALSE! AI made this up. Dolphins jump but they can't fly! This is called an AI 'hallucination'. 🐬" },
+    { "text": "The Sun is a star and the closest star to Earth. Its light takes about 8 minutes to reach us.", "answer": "umano", "explanation": "Correct! This is a verifiable scientific fact. ☀️" },
+    { "text": "Leonardo da Vinci painted the Mona Lisa using a secret technique that included diamond dust mixed with the colors.", "answer": "ai", "explanation": "MADE UP by AI! Leonardo used the 'sfumato' technique, not diamond dust. AI mixes real facts with inventions! 🎨" },
+    { "text": "Water boils at 100 degrees Celsius at sea level.", "answer": "umano", "explanation": "Correct and verifiable scientific fact! 🌡️" }
+  ]
+}

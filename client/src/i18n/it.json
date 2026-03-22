@@ -1,0 +1,144 @@
+{
+  "app": {
+    "title": "AI Avventura",
+    "subtitle": "Scopri il mondo dell'Intelligenza Artificiale!",
+    "loading": "Caricamento...",
+    "points": "punti",
+    "pt": "pt",
+    "team": "Squadra",
+    "teams": "squadre",
+    "session": "Sessione",
+    "backHome": "Torna alla home",
+    "code": "CODICE"
+  },
+  "landing": {
+    "enterAdventure": "Entra nell'avventura!",
+    "iAmTeacher": "Sono un insegnante",
+    "demoMode": "Modalit\u00e0 Demo"
+  },
+  "admin": {
+    "title": "Area Insegnante",
+    "subtitle": "Accedi per gestire le sessioni",
+    "username": "Nome utente",
+    "password": "Password",
+    "loggingIn": "Accesso...",
+    "login": "Accedi",
+    "console": "Console Insegnante",
+    "newSession": "Nuova Sessione",
+    "logout": "Esci",
+    "createSession": "Crea nuova sessione",
+    "sessionPlaceholder": "Es. Classe 4B - Scuola Verdi",
+    "create": "Crea",
+    "cancel": "Annulla",
+    "noSessions": "Nessuna sessione. Crea la prima!",
+    "codeLabel": "Codice",
+    "deleteConfirm": "Eliminare questa sessione e tutti i dati associati?",
+    "backToList": "Torna alla lista",
+    "shareCode": "Condividi questo codice con la classe",
+    "control": "Controllo",
+    "teamsConnected": "squadre collegate",
+    "startSession": "AVVIA SESSIONE",
+    "currentStage": "Stage corrente",
+    "intro": "Introduzione",
+    "finale": "Finale",
+    "questionOf": "Domanda {current} di {total}",
+    "responsesReceived": "Risposte ricevute",
+    "startGame": "Avvia Gioco {n}",
+    "nextQuestion": "Prossima domanda",
+    "goToFinale": "Vai al Finale",
+    "goTo": "Vai a {name}",
+    "completeSession": "Completa Sessione",
+    "pause": "Metti in pausa",
+    "resume": "Riprendi",
+    "sessionComplete": "Sessione completata!",
+    "viewResults": "Vedi Risultati",
+    "exportCSV": "Esporta CSV",
+    "scoreboard": "Classifica",
+    "noScoresYet": "Nessun punteggio ancora",
+    "detailedResults": "Risultati Dettagliati",
+    "correctByGame": "Percentuale risposte corrette per gioco",
+    "downloadFullCSV": "Scarica CSV completo"
+  },
+  "demo": {
+    "title": "Modalit\u00e0 Demo",
+    "subtitle": "Inserisci la password per provare i giochi",
+    "passwordPlaceholder": "Password demo",
+    "verifying": "Verifica...",
+    "startDemo": "Inizia la Demo",
+    "introTitle": "AI Avventura \u2014 Demo",
+    "introDesc": "Scopri come funziona l'Intelligenza Artificiale attraverso 4 giochi interattivi!",
+    "startAdventure": "Inizia l'avventura!",
+    "backHome": "Torna alla home",
+    "nextQuestion": "Prossima domanda",
+    "nextGame": "Prossimo gioco",
+    "seeResults": "Vedi i risultati"
+  },
+  "student": {
+    "joinTitle": "Unisciti all'Avventura!",
+    "sessionLabel": "Sessione:",
+    "teamPlaceholder": "Nome della squadra",
+    "connecting": "Collegamento...",
+    "enter": "Entra!",
+    "waitingTeacher": "La maestra sta per iniziare",
+    "connectedTeams": "Squadre collegate:",
+    "getReady": "Preparatevi! Tra poco inizia l'avventura nel mondo dell'AI!",
+    "readyTitle": "Pronti per l'avventura!",
+    "teacherPreparing": "La maestra sta preparando il prossimo gioco...",
+    "gameNotFound": "Gioco non trovato",
+    "waitingNextQ": "In attesa della prossima domanda...",
+    "waitTeacher": "Aspetta la prossima domanda dalla maestra...",
+    "paused": "Pausa!",
+    "pausedMsg": "La maestra ha messo in pausa. Aspettate un momento...",
+    "questionLabel": "Domanda {current} di {total}"
+  },
+  "finale": {
+    "title": "Avventura Completata!",
+    "champion": "Siete dei CAMPIONI dell'AI!",
+    "great": "Ottimo lavoro, esperti in formazione!",
+    "good": "Buon inizio! L'importante \u00e8 imparare!",
+    "keepGoing": "Continuate a esplorare il mondo dell'AI!",
+    "totalPoints": "Punti totali",
+    "correctAnswers": "Risposte corrette",
+    "closingMessage": "Ricordate: l'AI \u00e8 uno strumento potente. Usatela con intelligenza, verificate sempre le informazioni e non dimenticate di pensare con la vostra testa!"
+  },
+  "game1": {
+    "human": "Scritto da un UMANO",
+    "ai": "Inventato dall'AI"
+  },
+  "game2": {
+    "green": "VERDE \u2014 Ottimo!",
+    "yellow": "GIALLO \u2014 Attenzione!",
+    "red": "ROSSO \u2014 Pericolo!"
+  },
+  "game3": {
+    "newsLabel": "NOTIZIA:",
+    "selectClues": "Seleziona i 2 indizi sospetti ({count}/2)",
+    "confirmClues": "Conferma indizi"
+  },
+  "game4": {
+    "superpower": "SUPERPOTERE",
+    "superdanger": "SUPERPERICOLO"
+  },
+  "status": {
+    "lobby": "In attesa",
+    "active": "Attiva",
+    "paused": "In pausa",
+    "completed": "Completata"
+  },
+  "errors": {
+    "networkError": "Errore di rete",
+    "errorCode": "Errore {code}"
+  },
+  "csv": {
+    "team": "Squadra",
+    "game": "Gioco",
+    "question": "Domanda",
+    "answer": "Risposta",
+    "correct": "Corretto",
+    "points": "Punti",
+    "date": "Data",
+    "yes": "S\u00ec",
+    "no": "No",
+    "filename": "risultati"
+  }
+}

@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const { stmts } = require('../db');
 const { requireAdmin } = require('../auth');
 const { broadcast } = require('../sse');
+const { msg } = require('../i18n');
 
 const router = Router();
 
@@ -30,7 +31,7 @@ router.get('/', requireAdmin, (req, res) => {
 router.post('/', requireAdmin, (req, res) => {
   const { name } = req.body;
   if (!name || !name.trim()) {
-    return res.status(400).json({ error: 'Il nome della sessione è obbligatorio' });
+    return res.status(400).json({ error: msg(req, 'sessionNameRequired') });
   }
   const id = uuidv4();
   const code = generateCode();
@@ -42,7 +43,7 @@ router.post('/', requireAdmin, (req, res) => {
 // GET /api/sessions/:id — session detail
 router.get('/:id', requireAdmin, (req, res) => {
   const session = stmts.getSession.get(req.params.id);
-  if (!session) return res.status(404).json({ error: 'Sessione non trovata' });
+  if (!session) return res.status(404).json({ error: msg(req, 'sessionNotFound') });
   const teams = stmts.listTeams.all(session.id);
   const scores = stmts.getTeamScores.all(session.id);
   const gameStats = stmts.getGameStats.all(session.id);
@@ -52,9 +53,9 @@ router.get('/:id', requireAdmin, (req, res) => {
 // POST /api/sessions/:id/start
 router.post('/:id/start', requireAdmin, (req, res) => {
   const session = stmts.getSession.get(req.params.id);
-  if (!session) return res.status(404).json({ error: 'Sessione non trovata' });
+  if (!session) return res.status(404).json({ error: msg(req, 'sessionNotFound') });
   if (session.status !== 'lobby' && session.status !== 'paused') {
-    return res.status(400).json({ error: 'La sessione non può essere avviata dallo stato attuale' });
+    return res.status(400).json({ error: msg(req, 'sessionCannotStart') });
   }
   stmts.updateSessionStatus.run('active', session.id);
   broadcast(session.id, 'session:start', { status: 'active' });
@@ -64,16 +65,15 @@ router.post('/:id/start', requireAdmin, (req, res) => {
 // POST /api/sessions/:id/advance
 router.post('/:id/advance', requireAdmin, (req, res) => {
   const session = stmts.getSession.get(req.params.id);
-  if (!session) return res.status(404).json({ error: 'Sessione non trovata' });
+  if (!session) return res.status(404).json({ error: msg(req, 'sessionNotFound') });
   if (session.status !== 'active') {
-    return res.status(400).json({ error: 'La sessione non è attiva' });
+    return res.status(400).json({ error: msg(req, 'sessionNotActive') });
   }
 
   const { stage, questionIndex } = req.body;
   if (stage !== undefined) {
     stmts.updateSessionStage.run(stage, questionIndex ?? 0, session.id);
   } else {
-    // Just advance question index
     stmts.updateSessionStage.run(session.current_stage, (session.current_question + 1), session.id);
   }
 
@@ -85,7 +85,7 @@ router.post('/:id/advance', requireAdmin, (req, res) => {
 // POST /api/sessions/:id/pause
 router.post('/:id/pause', requireAdmin, (req, res) => {
   const session = stmts.getSession.get(req.params.id);
-  if (!session) return res.status(404).json({ error: 'Sessione non trovata' });
+  if (!session) return res.status(404).json({ error: msg(req, 'sessionNotFound') });
   stmts.updateSessionStatus.run('paused', session.id);
   broadcast(session.id, 'session:pause', { status: 'paused' });
   res.json({ status: 'paused' });
@@ -94,7 +94,7 @@ router.post('/:id/pause', requireAdmin, (req, res) => {
 // POST /api/sessions/:id/complete
 router.post('/:id/complete', requireAdmin, (req, res) => {
   const session = stmts.getSession.get(req.params.id);
-  if (!session) return res.status(404).json({ error: 'Sessione non trovata' });
+  if (!session) return res.status(404).json({ error: msg(req, 'sessionNotFound') });
   stmts.completeSession.run(session.id);
   broadcast(session.id, 'session:complete', { status: 'completed' });
   res.json({ status: 'completed' });
@@ -103,7 +103,7 @@ router.post('/:id/complete', requireAdmin, (req, res) => {
 // DELETE /api/sessions/:id
 router.delete('/:id', requireAdmin, (req, res) => {
   const session = stmts.getSession.get(req.params.id);
-  if (!session) return res.status(404).json({ error: 'Sessione non trovata' });
+  if (!session) return res.status(404).json({ error: msg(req, 'sessionNotFound') });
   stmts.deleteSession.run(session.id);
   res.json({ deleted: true });
 });

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSSE } from '../hooks/useSSE';
 import { apiFetch } from '../lib/api';
+import { useI18n } from '../i18n/I18nContext';
 import ProgressBar from '../components/ProgressBar';
 import Finale from '../components/Finale';
 import Game1WhoWroteIt from '../components/games/Game1WhoWroteIt';
@@ -21,6 +22,7 @@ const GAME_COMPONENTS = {
 export default function StudentPlay() {
   const { sessionCode } = useParams();
   const navigate = useNavigate();
+  const { t } = useI18n();
   const [content, setContent] = useState(null);
   const [stage, setStage] = useState('intro');
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -71,7 +73,7 @@ export default function StudentPlay() {
   });
 
   if (!teamInfo) return null;
-  if (!content) return <div style={{ textAlign: 'center', padding: '60px', fontSize: '24px' }}>⏳ Caricamento...</div>;
+  if (!content) return <div style={{ textAlign: 'center', padding: '60px', fontSize: '24px' }}>⏳ {t('app.loading')}</div>;
 
   // Paused screen
   if (status === 'paused') {
@@ -79,8 +81,8 @@ export default function StudentPlay() {
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
         <div style={{ ...card, textAlign: 'center' }}>
           <div style={{ fontSize: '72px', marginBottom: '16px' }}>⏸️</div>
-          <h1 style={{ fontSize: '32px', fontWeight: 900, marginBottom: '12px' }}>Pausa!</h1>
-          <p style={{ fontSize: '20px', color: 'rgba(255,255,255,0.6)' }}>La maestra ha messo in pausa. Aspettate un momento...</p>
+          <h1 style={{ fontSize: '32px', fontWeight: 900, marginBottom: '12px' }}>{t('student.paused')}</h1>
+          <p style={{ fontSize: '20px', color: 'rgba(255,255,255,0.6)' }}>{t('student.pausedMsg')}</p>
         </div>
       </div>
     );
@@ -94,17 +96,17 @@ export default function StudentPlay() {
           <Finale totalPoints={totalPoints} totalCorrect={totalCorrect} totalQuestions={totalQuestions} />
           {scores.length > 0 && (
             <div style={{ marginTop: '24px' }}>
-              <h3 style={{ fontSize: '22px', fontWeight: 800, textAlign: 'center', marginBottom: '16px' }}>🏆 Classifica</h3>
-              {scores.map((s, i) => (
-                <div key={s.id} style={{
+              <h3 style={{ fontSize: '22px', fontWeight: 800, textAlign: 'center', marginBottom: '16px' }}>🏆 {t('admin.scoreboard')}</h3>
+              {scores.map((sc, i) => (
+                <div key={sc.id} style={{
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  padding: '12px 16px', background: s.id === teamInfo.teamId ? 'rgba(249,115,22,0.15)' : 'rgba(255,255,255,0.04)',
-                  borderRadius: '12px', marginBottom: '8px', border: s.id === teamInfo.teamId ? '2px solid #F97316' : '1px solid rgba(255,255,255,0.05)',
+                  padding: '12px 16px', background: sc.id === teamInfo.teamId ? 'rgba(249,115,22,0.15)' : 'rgba(255,255,255,0.04)',
+                  borderRadius: '12px', marginBottom: '8px', border: sc.id === teamInfo.teamId ? '2px solid #F97316' : '1px solid rgba(255,255,255,0.05)',
                 }}>
                   <span style={{ fontSize: '18px', fontWeight: 700 }}>
-                    {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}.`} {s.name}
+                    {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}.`} {sc.name}
                   </span>
-                  <span style={{ fontSize: '20px', fontWeight: 800, color: '#FFE66D' }}>{s.total_points} pt</span>
+                  <span style={{ fontSize: '20px', fontWeight: 800, color: '#FFE66D' }}>{sc.total_points} {t('app.pt')}</span>
                 </div>
               ))}
             </div>
@@ -120,12 +122,12 @@ export default function StudentPlay() {
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
         <div style={{ ...card, textAlign: 'center', animation: 'fadeIn 0.5s ease' }}>
           <div style={{ fontSize: '72px', marginBottom: '16px', animation: 'bounce 2s ease infinite' }}>🤖</div>
-          <h1 style={{ fontSize: '28px', fontWeight: 900, marginBottom: '12px' }}>Pronti per l'avventura!</h1>
+          <h1 style={{ fontSize: '28px', fontWeight: 900, marginBottom: '12px' }}>{t('student.readyTitle')}</h1>
           <p style={{ fontSize: '20px', color: 'rgba(255,255,255,0.6)' }}>
-            Squadra: <strong style={{ color: '#FFE66D' }}>{teamInfo.teamName}</strong>
+            {t('app.team')}: <strong style={{ color: '#FFE66D' }}>{teamInfo.teamName}</strong>
           </p>
           <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.5)', marginTop: '16px' }}>
-            La maestra sta preparando il prossimo gioco...
+            {t('student.teacherPreparing')}
           </p>
         </div>
       </div>
@@ -135,7 +137,7 @@ export default function StudentPlay() {
   // Game screen
   const gameKey = stage;
   const gameData = content[gameKey];
-  if (!gameData) return <div style={{ textAlign: 'center', padding: '60px' }}>Gioco non trovato</div>;
+  if (!gameData) return <div style={{ textAlign: 'center', padding: '60px' }}>{t('student.gameNotFound')}</div>;
 
   const questions = gameData.questions;
   const currentQ = questions[questionIndex];
@@ -144,7 +146,7 @@ export default function StudentPlay() {
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
         <div style={{ ...card, textAlign: 'center' }}>
           <div style={{ fontSize: '48px', marginBottom: '16px' }}>⏳</div>
-          <p style={{ fontSize: '22px', fontWeight: 700 }}>In attesa della prossima domanda...</p>
+          <p style={{ fontSize: '22px', fontWeight: 700 }}>{t('student.waitingNextQ')}</p>
         </div>
       </div>
     );
@@ -173,7 +175,7 @@ export default function StudentPlay() {
       setWaitingForNext(true);
     } catch (err) {
       // Duplicate response — show as already answered
-      if (err.message.includes('già risposto')) {
+      if (err.message.includes('already') || err.message.includes('già')) {
         setWaitingForNext(true);
       }
     }
@@ -186,18 +188,18 @@ export default function StudentPlay() {
           <div style={{ fontSize: '16px', color: '#A78BFA', fontWeight: 700, marginBottom: '4px' }}>
             {gameData.emoji} {gameData.title}
           </div>
-          <ProgressBar current={questionIndex + 1} total={questions.length} label={`Domanda ${questionIndex + 1} di ${questions.length}`} />
+          <ProgressBar current={questionIndex + 1} total={questions.length} label={t('student.questionLabel', { current: questionIndex + 1, total: questions.length })} />
         </div>
 
         <div style={{ textAlign: 'center', marginBottom: '20px', fontSize: '20px', fontWeight: 800, color: '#FFE66D' }}>
-          ⭐ {totalPoints} punti — 👥 {teamInfo.teamName}
+          ⭐ {totalPoints} {t('app.points')} — 👥 {teamInfo.teamName}
         </div>
 
         <GameComponent question={currentQ} onAnswer={handleAnswer} showResult={showResult} result={result} />
 
         {waitingForNext && (
           <div style={{ textAlign: 'center', marginTop: '20px', padding: '16px', background: 'rgba(167,139,250,0.1)', borderRadius: '12px', fontSize: '18px', color: '#A78BFA' }}>
-            ⏳ Aspetta la prossima domanda dalla maestra...
+            ⏳ {t('student.waitTeacher')}
           </div>
         )}
       </div>

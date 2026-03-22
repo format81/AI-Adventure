@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useI18n } from '../i18n/I18nContext';
 
 const s = {
   container: { minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', animation: 'fadeIn 0.5s ease' },
@@ -16,6 +17,7 @@ const s = {
 export default function Landing() {
   const [code, setCode] = useState('');
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   const handleJoin = (e) => {
     e.preventDefault();
@@ -28,27 +30,27 @@ export default function Landing() {
     <div style={s.container}>
       <div style={s.card}>
         <span style={s.robot}>🤖</span>
-        <h1 style={s.title}>AI Avventura</h1>
-        <p style={s.subtitle}>Scopri il mondo dell'Intelligenza Artificiale!</p>
+        <h1 style={s.title}>{t('app.title')}</h1>
+        <p style={s.subtitle}>{t('app.subtitle')}</p>
 
         <form onSubmit={handleJoin}>
           <input
             style={s.input}
             type="text"
-            placeholder="CODICE"
+            placeholder={t('app.code')}
             value={code}
             onChange={(e) => setCode(e.target.value.toUpperCase().slice(0, 6))}
             maxLength={6}
             autoComplete="off"
           />
           <button style={{ ...s.btn, opacity: code.trim().length >= 4 ? 1 : 0.5 }} type="submit">
-            🚀 Entra nell'avventura!
+            🚀 {t('landing.enterAdventure')}
           </button>
         </form>
 
         <div style={s.links}>
-          <Link to="/admin" style={s.link}>👩‍🏫 Sono un insegnante</Link>
-          <Link to="/demo" style={s.link}>🎮 Modalità Demo</Link>
+          <Link to="/admin" style={s.link}>👩‍🏫 {t('landing.iAmTeacher')}</Link>
+          <Link to="/demo" style={s.link}>🎮 {t('landing.demoMode')}</Link>
         </div>
       </div>
     </div>

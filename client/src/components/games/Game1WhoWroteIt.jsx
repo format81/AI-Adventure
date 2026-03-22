@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Confetti from '../Confetti';
+import { useI18n } from '../../i18n/I18nContext';
 
 const btnBase = {
   width: '100%', padding: '20px 24px', fontSize: '20px', fontWeight: 800,
@@ -9,6 +10,7 @@ const btnBase = {
 
 export default function Game1WhoWroteIt({ question, onAnswer, showResult, result }) {
   const [selected, setSelected] = useState(null);
+  const { t } = useI18n();
 
   const handleSelect = (answer) => {
     if (showResult) return;
@@ -17,8 +19,8 @@ export default function Game1WhoWroteIt({ question, onAnswer, showResult, result
   };
 
   const options = [
-    { value: 'umano', label: '👤 Scritto da un UMANO', emoji: '👤' },
-    { value: 'ai', label: '🤖 Inventato dall\'AI', emoji: '🤖' },
+    { value: 'umano', label: `👤 ${t('game1.human')}`, emoji: '👤' },
+    { value: 'ai', label: `🤖 ${t('game1.ai')}`, emoji: '🤖' },
   ];
 
   return (
@@ -65,7 +67,7 @@ export default function Game1WhoWroteIt({ question, onAnswer, showResult, result
         }}>
           <div style={{ fontSize: '28px', marginBottom: '8px' }}>{result?.correct ? '✅' : '❌'}</div>
           <p style={{ fontSize: '18px', lineHeight: 1.5 }}>{result?.explanation}</p>
-          {result?.points > 0 && <p style={{ fontSize: '20px', fontWeight: 800, color: '#FFE66D', marginTop: '8px' }}>+{result.points} punti! 🎉</p>}
+          {result?.points > 0 && <p style={{ fontSize: '20px', fontWeight: 800, color: '#FFE66D', marginTop: '8px' }}>+{result.points} {t('app.points')}! 🎉</p>}
         </div>
       )}
     </div>

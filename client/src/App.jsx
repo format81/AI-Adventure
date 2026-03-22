@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
+import LanguageSelector from './components/LanguageSelector';
 import Landing from './pages/Landing';
 import AdminLogin from './pages/AdminLogin';
 import AdminConsole from './pages/AdminConsole';
@@ -23,16 +24,19 @@ function ProtectedDemo({ children }) {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/admin" element={<AdminLogin />} />
-      <Route path="/admin/console" element={<ProtectedAdmin><AdminConsole /></ProtectedAdmin>} />
-      <Route path="/demo" element={<DemoGate />} />
-      <Route path="/demo/play" element={<ProtectedDemo><DemoMode /></ProtectedDemo>} />
-      <Route path="/play/:sessionCode" element={<StudentJoin />} />
-      <Route path="/play/:sessionCode/lobby" element={<StudentLobby />} />
-      <Route path="/play/:sessionCode/game" element={<StudentPlay />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    <>
+      <LanguageSelector />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/admin/console" element={<ProtectedAdmin><AdminConsole /></ProtectedAdmin>} />
+        <Route path="/demo" element={<DemoGate />} />
+        <Route path="/demo/play" element={<ProtectedDemo><DemoMode /></ProtectedDemo>} />
+        <Route path="/play/:sessionCode" element={<StudentJoin />} />
+        <Route path="/play/:sessionCode/lobby" element={<StudentLobby />} />
+        <Route path="/play/:sessionCode/game" element={<StudentPlay />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 }

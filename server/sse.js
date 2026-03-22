@@ -1,5 +1,5 @@
-// SSE connection manager
-// Map: sessionId → Set<Response>
+// SSE (Server-Sent Events) connection manager
+// Map: sessionId -> Set<Response>
 const connections = new Map();
 
 function addConnection(sessionId, res) {

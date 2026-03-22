@@ -6,6 +6,7 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const { initAdmins } = require('./auth');
 const { addConnection } = require('./sse');
+const { msg } = require('./i18n');
 
 // --- Load and validate game content ---
 const CONTENT_DIR = path.join(__dirname, '..', 'content');
@@ -22,7 +23,7 @@ function loadGameContent() {
   for (const [key, filename] of Object.entries(files)) {
     const filepath = path.join(CONTENT_DIR, filename);
     if (!fs.existsSync(filepath)) {
-      console.error(`ERRORE: File contenuto mancante: ${filepath}`);
+      console.error(`ERROR: Missing content file: ${filepath}`);
       process.exit(1);
     }
     try {
@@ -30,12 +31,12 @@ function loadGameContent() {
       const data = JSON.parse(raw);
       validateGameContent(key, data, filename);
       content[key] = data;
-      console.log(`Contenuto caricato: ${filename} (${data.questions.length} domande)`);
+      console.log(`Content loaded: ${filename} (${data.questions.length} questions)`);
     } catch (err) {
       if (err instanceof SyntaxError) {
-        console.error(`ERRORE: JSON non valido in ${filename}: ${err.message}`);
+        console.error(`ERROR: Invalid JSON in ${filename}: ${err.message}`);
       } else {
-        console.error(`ERRORE in ${filename}: ${err.message}`);
+        console.error(`ERROR in ${filename}: ${err.message}`);
       }
       process.exit(1);
     }
@@ -47,29 +48,29 @@ function validateGameContent(key, data, filename) {
   const required = ['title', 'emoji', 'description', 'rules', 'pointsPerCorrect', 'questions'];
   for (const field of required) {
     if (data[field] === undefined) {
-      throw new Error(`Campo obbligatorio mancante: "${field}" in ${filename}`);
+      throw new Error(`Missing required field: "${field}" in ${filename}`);
     }
   }
   if (!Array.isArray(data.questions) || data.questions.length === 0) {
-    throw new Error(`"questions" deve essere un array non vuoto in ${filename}`);
+    throw new Error(`"questions" must be a non-empty array in ${filename}`);
   }
 
   // Game-specific validation
   if (key === 'game1') {
     data.questions.forEach((q, i) => {
-      if (!q.text || !q.answer || !q.explanation) throw new Error(`game1 domanda ${i}: campi mancanti (text, answer, explanation) in ${filename}`);
+      if (!q.text || !q.answer || !q.explanation) throw new Error(`game1 question ${i}: missing fields (text, answer, explanation) in ${filename}`);
     });
   } else if (key === 'game2') {
     data.questions.forEach((q, i) => {
-      if (!q.scenario || !q.answer || !q.explanation) throw new Error(`game2 domanda ${i}: campi mancanti (scenario, answer, explanation) in ${filename}`);
+      if (!q.scenario || !q.answer || !q.explanation) throw new Error(`game2 question ${i}: missing fields (scenario, answer, explanation) in ${filename}`);
     });
   } else if (key === 'game3') {
     data.questions.forEach((q, i) => {
-      if (!q.claim || !q.options || !q.explanation) throw new Error(`game3 domanda ${i}: campi mancanti (claim, options, explanation) in ${filename}`);
+      if (!q.claim || !q.options || !q.explanation) throw new Error(`game3 question ${i}: missing fields (claim, options, explanation) in ${filename}`);
     });
   } else if (key === 'game4') {
     data.questions.forEach((q, i) => {
-      if (!q.text || !q.type || !q.emoji) throw new Error(`game4 domanda ${i}: campi mancanti (text, type, emoji) in ${filename}`);
+      if (!q.text || !q.type || !q.emoji) throw new Error(`game4 question ${i}: missing fields (text, type, emoji) in ${filename}`);
     });
   }
 }
@@ -81,16 +82,16 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 const isProd = process.env.NODE_ENV === 'production';
 
-// Security
+// Security headers
 app.use(helmet({
   contentSecurityPolicy: false, // Let the SPA handle its own CSP
 }));
 
-// CORS
+// CORS configuration
 if (isProd) {
-  app.use(cors({ origin: false })); // Same-origin in prod
+  app.use(cors({ origin: false })); // Same-origin in production
 } else {
-  app.use(cors()); // Permissive in dev
+  app.use(cors()); // Permissive in development
 }
 
 // Body parsing
@@ -100,7 +101,9 @@ app.use(express.json());
 const loginLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 30,
-  message: { error: 'Troppi tentativi. Riprova tra un minuto.' },
+  handler: (req, res) => {
+    res.status(429).json({ error: msg(req, 'tooManyAttempts') });
+  },
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -108,7 +111,9 @@ const loginLimiter = rateLimit({
 const gameLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 100,
-  message: { error: 'Troppe richieste. Riprova tra poco.' },
+  handler: (req, res) => {
+    res.status(429).json({ error: msg(req, 'tooManyRequests') });
+  },
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -151,6 +156,6 @@ if (fs.existsSync(publicDir)) {
 }
 
 app.listen(PORT, () => {
-  console.log(`AI Avventura server running on port ${PORT}`);
+  console.log(`AI Adventure server running on port ${PORT}`);
   console.log(`Environment: ${isProd ? 'production' : 'development'}`);
 });

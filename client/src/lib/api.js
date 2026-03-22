@@ -15,8 +15,8 @@ export async function apiFetch(path, options = {}) {
   const res = await fetch(`${BASE}${path}`, { ...options, headers });
 
   if (!res.ok) {
-    const body = await res.json().catch(() => ({ error: 'Errore di rete' }));
-    throw new Error(body.error || `Errore ${res.status}`);
+    const body = await res.json().catch(() => ({ error: `Error ${res.status}` }));
+    throw new Error(body.error || `Error ${res.status}`);
   }
 
   if (res.headers.get('content-type')?.includes('text/csv')) {
