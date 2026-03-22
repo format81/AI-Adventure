@@ -195,7 +195,7 @@ export default function StudentPlay() {
           ⭐ {totalPoints} {t('app.points')} — 👥 {teamInfo.teamName}
         </div>
 
-        <GameComponent question={currentQ} onAnswer={handleAnswer} showResult={showResult} result={result} />
+        <GameComponent key={`${gameKey}-${questionIndex}`} question={currentQ} onAnswer={handleAnswer} showResult={showResult} result={result} />
 
         {waitingForNext && (
           <div style={{ textAlign: 'center', marginTop: '20px', padding: '16px', background: 'rgba(167,139,250,0.1)', borderRadius: '12px', fontSize: '18px', color: '#A78BFA' }}>
