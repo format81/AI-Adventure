@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../lib/api';
+import { useI18n } from '../i18n/I18nContext';
 
 const s = {
   container: { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', animation: 'fadeIn 0.5s ease' },
@@ -19,6 +20,7 @@ export default function StudentJoin() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   const handleJoin = async (e) => {
     e.preventDefault();
@@ -49,15 +51,15 @@ export default function StudentJoin() {
     <div style={s.container}>
       <div style={s.card}>
         <div style={{ fontSize: '64px', marginBottom: '16px' }}>🤖</div>
-        <h1 style={s.title}>Unisciti all'Avventura!</h1>
-        <p style={s.subtitle}>Sessione:</p>
+        <h1 style={s.title}>{t('student.joinTitle')}</h1>
+        <p style={s.subtitle}>{t('student.sessionLabel')}</p>
         <div style={s.code}>{sessionCode.toUpperCase()}</div>
 
         <form onSubmit={handleJoin}>
           <input
             style={s.input}
             type="text"
-            placeholder="Nome della squadra 🏷️"
+            placeholder={`${t('student.teamPlaceholder')} 🏷️`}
             value={teamName}
             onChange={(e) => setTeamName(e.target.value)}
             maxLength={30}
@@ -65,7 +67,7 @@ export default function StudentJoin() {
           />
           {error && <div style={s.error}>❌ {error}</div>}
           <button style={{ ...s.btn, opacity: loading || !teamName.trim() ? 0.6 : 1 }} type="submit" disabled={loading || !teamName.trim()}>
-            {loading ? '⏳ Collegamento...' : '🚀 Entra!'}
+            {loading ? `⏳ ${t('student.connecting')}` : `🚀 ${t('student.enter')}`}
           </button>
         </form>
       </div>

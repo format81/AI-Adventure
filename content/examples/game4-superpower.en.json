@@ -1,0 +1,17 @@
+{
+  "title": "Superpower or Superdanger?",
+  "emoji": "⚡",
+  "description": "AI has incredible capabilities, but every power can be used for good or for evil!",
+  "rules": "For each statement, decide if it's a SUPERPOWER (positive use) or a SUPERDANGER (negative use) of AI.",
+  "pointsPerCorrect": 10,
+  "questions": [
+    { "text": "AI can help doctors find diseases earlier", "type": "potere", "emoji": "🏥" },
+    { "text": "AI can create fake videos of real people", "type": "pericolo", "emoji": "🎭" },
+    { "text": "AI can translate languages in real time", "type": "potere", "emoji": "🌍" },
+    { "text": "AI can be used to cheat at school", "type": "pericolo", "emoji": "📝" },
+    { "text": "AI can help people with disabilities", "type": "potere", "emoji": "♿" },
+    { "text": "AI can spread fake news quickly", "type": "pericolo", "emoji": "📰" },
+    { "text": "AI can create new music and art", "type": "potere", "emoji": "🎵" },
+    { "text": "AI collects personal data without you knowing", "type": "pericolo", "emoji": "🔐" }
+  ]
+}

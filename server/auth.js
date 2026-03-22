@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { stmts } = require('./db');
+const { msg } = require('./i18n');
 
 const SECRET = process.env.SESSION_SECRET || 'dev-secret-change-me';
 const BCRYPT_ROUNDS = 12;
@@ -21,7 +22,6 @@ function initAdmins() {
     }
     const existing = stmts.getAdmin.get(username);
     if (existing) {
-      // Check if password changed
       const same = bcrypt.compareSync(password, existing.password_hash);
       if (!same) {
         const hash = bcrypt.hashSync(password, BCRYPT_ROUNDS);
@@ -50,35 +50,35 @@ function verifyToken(token) {
 function requireAdmin(req, res, next) {
   const auth = req.headers.authorization;
   if (!auth || !auth.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'Token mancante' });
+    return res.status(401).json({ error: msg(req, 'missingToken') });
   }
   try {
     const payload = verifyToken(auth.slice(7));
     if (payload.role !== 'admin') {
-      return res.status(403).json({ error: 'Accesso riservato agli admin' });
+      return res.status(403).json({ error: msg(req, 'adminOnly') });
     }
     req.user = payload;
     next();
   } catch {
-    return res.status(401).json({ error: 'Token non valido o scaduto' });
+    return res.status(401).json({ error: msg(req, 'invalidToken') });
   }
 }
 
-// Middleware: require demo JWT
+// Middleware: require demo or admin JWT
 function requireDemo(req, res, next) {
   const auth = req.headers.authorization;
   if (!auth || !auth.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'Token mancante' });
+    return res.status(401).json({ error: msg(req, 'missingToken') });
   }
   try {
     const payload = verifyToken(auth.slice(7));
     if (payload.role !== 'demo' && payload.role !== 'admin') {
-      return res.status(403).json({ error: 'Accesso non autorizzato' });
+      return res.status(403).json({ error: msg(req, 'unauthorized') });
     }
     req.user = payload;
     next();
   } catch {
-    return res.status(401).json({ error: 'Token non valido o scaduto' });
+    return res.status(401).json({ error: msg(req, 'invalidToken') });
   }
 }
 

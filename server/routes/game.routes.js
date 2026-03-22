@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { v4: uuidv4 } = require('uuid');
 const { stmts } = require('../db');
 const { broadcast } = require('../sse');
+const { msg } = require('../i18n');
 
 const router = Router();
 
@@ -18,15 +19,15 @@ router.get('/content', (req, res) => {
 router.post('/join', (req, res) => {
   const { sessionCode, teamName } = req.body;
   if (!sessionCode || !teamName || !teamName.trim()) {
-    return res.status(400).json({ error: 'Codice sessione e nome squadra sono obbligatori' });
+    return res.status(400).json({ error: msg(req, 'sessionCodeAndTeamRequired') });
   }
 
   const session = stmts.getSessionByCode.get(sessionCode.toUpperCase());
   if (!session) {
-    return res.status(404).json({ error: 'Sessione non trovata. Controlla il codice!' });
+    return res.status(404).json({ error: msg(req, 'sessionNotFoundCheckCode') });
   }
   if (session.status === 'completed') {
-    return res.status(400).json({ error: 'Questa sessione è già terminata' });
+    return res.status(400).json({ error: msg(req, 'sessionAlreadyEnded') });
   }
 
   // Check if team already exists
@@ -40,7 +41,7 @@ router.post('/join', (req, res) => {
     stmts.createTeam.run(teamId, session.id, teamName.trim());
   } catch (err) {
     if (err.message.includes('UNIQUE')) {
-      return res.status(409).json({ error: 'Nome squadra già in uso in questa sessione' });
+      return res.status(409).json({ error: msg(req, 'teamNameTaken') });
     }
     throw err;
   }
@@ -54,7 +55,7 @@ router.post('/join', (req, res) => {
 // GET /api/game/:sessionId/state — get session state
 router.get('/:sessionId/state', (req, res) => {
   const session = stmts.getSession.get(req.params.sessionId);
-  if (!session) return res.status(404).json({ error: 'Sessione non trovata' });
+  if (!session) return res.status(404).json({ error: msg(req, 'sessionNotFound') });
   res.json({
     status: session.status,
     stage: session.current_stage,
@@ -66,24 +67,24 @@ router.get('/:sessionId/state', (req, res) => {
 router.post('/respond', (req, res) => {
   const { sessionId, teamId, game, questionIndex, answer } = req.body;
   if (!sessionId || !teamId || !game || questionIndex === undefined || answer === undefined) {
-    return res.status(400).json({ error: 'Dati incompleti' });
+    return res.status(400).json({ error: msg(req, 'incompleteData') });
   }
 
   const session = stmts.getSession.get(sessionId);
-  if (!session) return res.status(404).json({ error: 'Sessione non trovata' });
+  if (!session) return res.status(404).json({ error: msg(req, 'sessionNotFound') });
   if (session.status !== 'active') {
-    return res.status(400).json({ error: 'La sessione non è attiva' });
+    return res.status(400).json({ error: msg(req, 'sessionNotActive') });
   }
 
   const team = stmts.getTeam.get(teamId);
   if (!team || team.session_id !== sessionId) {
-    return res.status(404).json({ error: 'Squadra non trovata in questa sessione' });
+    return res.status(404).json({ error: msg(req, 'teamNotFound') });
   }
 
   // Check for duplicate response
   const existingResp = stmts.getResponse.get(sessionId, teamId, game, questionIndex);
   if (existingResp) {
-    return res.status(409).json({ error: 'Hai già risposto a questa domanda' });
+    return res.status(409).json({ error: msg(req, 'alreadyAnswered') });
   }
 
   // Validate and score the answer
@@ -102,7 +103,7 @@ router.post('/respond', (req, res) => {
 // GET /api/game/:sessionId/scores — live scoreboard
 router.get('/:sessionId/scores', (req, res) => {
   const session = stmts.getSession.get(req.params.sessionId);
-  if (!session) return res.status(404).json({ error: 'Sessione non trovata' });
+  if (!session) return res.status(404).json({ error: msg(req, 'sessionNotFound') });
   const scores = stmts.getTeamScores.all(req.params.sessionId);
   res.json(scores);
 });
@@ -127,7 +128,7 @@ function validateAnswer(game, questionIndex, answer) {
   if (game === 'game3') {
     const q = gameContent.game3.questions[questionIndex];
     if (!q) return { correct: false, points: 0, explanation: '' };
-    // answer should be an array of option ids that the team thinks are fake
+    // Answer should be an array of option ids that the team thinks are fake
     const fakeIds = q.options.filter(o => o.isFake).map(o => o.id);
     const answerIds = Array.isArray(answer) ? answer.sort() : [];
     const correct = JSON.stringify(answerIds) === JSON.stringify(fakeIds.sort());

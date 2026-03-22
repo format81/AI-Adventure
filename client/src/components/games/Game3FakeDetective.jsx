@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Confetti from '../Confetti';
+import { useI18n } from '../../i18n/I18nContext';
 
 const btnBase = {
   width: '100%', padding: '18px 20px', fontSize: '18px', fontWeight: 700,
@@ -10,6 +11,7 @@ const btnBase = {
 export default function Game3FakeDetective({ question, onAnswer, showResult, result }) {
   const [selected, setSelected] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const { t } = useI18n();
 
   const toggleOption = (id) => {
     if (showResult || submitted) return;
@@ -33,14 +35,14 @@ export default function Game3FakeDetective({ question, onAnswer, showResult, res
         borderRadius: '20px', padding: '28px 24px', marginBottom: '16px',
         animation: showResult && !result?.correct ? 'shake 0.5s ease' : undefined,
       }}>
-        <div style={{ fontSize: '16px', color: '#FFE66D', fontWeight: 700, marginBottom: '8px' }}>📰 NOTIZIA:</div>
+        <div style={{ fontSize: '16px', color: '#FFE66D', fontWeight: 700, marginBottom: '8px' }}>📰 {t('game3.newsLabel')}</div>
         <p style={{ fontSize: '22px', fontWeight: 700, lineHeight: 1.5 }}>
           "{question.claim}"
         </p>
       </div>
 
       <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.6)', marginBottom: '16px', textAlign: 'center' }}>
-        🔎 Seleziona i 2 indizi sospetti ({selected.length}/2)
+        🔎 {t('game3.selectClues', { count: selected.length })}
       </p>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
@@ -72,7 +74,7 @@ export default function Game3FakeDetective({ question, onAnswer, showResult, res
             color: selected.length === 2 ? '#1a1a2e' : 'rgba(255,255,255,0.3)',
             minHeight: '56px', boxShadow: selected.length === 2 ? '0 4px 20px rgba(249,115,22,0.3)' : 'none',
           }}>
-          🔍 Conferma indizi
+          🔍 {t('game3.confirmClues')}
         </button>
       )}
 
@@ -84,7 +86,7 @@ export default function Game3FakeDetective({ question, onAnswer, showResult, res
         }}>
           <div style={{ fontSize: '28px', marginBottom: '8px' }}>{result?.correct ? '✅' : '❌'}</div>
           <p style={{ fontSize: '18px', lineHeight: 1.5 }}>{result?.explanation}</p>
-          {result?.points > 0 && <p style={{ fontSize: '20px', fontWeight: 800, color: '#FFE66D', marginTop: '8px' }}>+{result.points} punti! 🎉</p>}
+          {result?.points > 0 && <p style={{ fontSize: '20px', fontWeight: 800, color: '#FFE66D', marginTop: '8px' }}>+{result.points} {t('app.points')}! 🎉</p>}
         </div>
       )}
     </div>

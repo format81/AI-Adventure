@@ -1,0 +1,15 @@
+{
+  "title": "AI Traffic Light",
+  "emoji": "🚦",
+  "description": "Not all uses of AI are the same. Some are great, others are dangerous!",
+  "rules": "For each situation, choose the traffic light color: 🟢 GREEN = Great use! 🟡 YELLOW = Caution! 🔴 RED = Danger!",
+  "pointsPerCorrect": 10,
+  "questions": [
+    { "scenario": "You use AI to explain a science topic you didn't understand well.", "answer": "verde", "explanation": "AI is a great tutor! It can explain things in different ways until you understand. 💡" },
+    { "scenario": "You copy and paste an essay written by AI and submit it to your teacher as your own.", "answer": "rosso", "explanation": "That's CHEATING! The assignment should be YOUR work. AI can help you understand, but it shouldn't do the work for you. 🚫" },
+    { "scenario": "You ask AI for story ideas and then write the story yourself in your own words.", "answer": "verde", "explanation": "Perfect! Using AI for inspiration and then creating something of your own is a smart use! ✨" },
+    { "scenario": "A friend sends you a photo of a classmate modified with AI to make fun of them.", "answer": "rosso", "explanation": "That's CYBERBULLYING! Modifying photos of other people with AI to offend them is very serious and hurtful. 💔" },
+    { "scenario": "You use AI to translate a sentence into another language, but then check with a dictionary if it's correct.", "answer": "giallo", "explanation": "Good idea to check! AI sometimes makes translation mistakes. Verifying is always important! 🔍" },
+    { "scenario": "You believe everything AI tells you without ever verifying.", "answer": "rosso", "explanation": "AI can MAKE UP things that seem true! You should always verify important information. 🧐" }
+  ]
+}

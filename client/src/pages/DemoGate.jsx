@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../lib/api';
+import { useI18n } from '../i18n/I18nContext';
 
 const s = {
   container: { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', animation: 'fadeIn 0.5s ease' },
@@ -20,6 +21,7 @@ export default function DemoGate() {
   const [loading, setLoading] = useState(false);
   const { auth, login } = useAuth();
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   if (auth?.role === 'demo' || auth?.role === 'admin') {
     navigate('/demo/play', { replace: true });
@@ -48,17 +50,17 @@ export default function DemoGate() {
     <div style={s.container}>
       <div style={s.card}>
         <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎮</div>
-        <h1 style={s.title}>Modalità Demo</h1>
-        <p style={s.subtitle}>Inserisci la password per provare i giochi</p>
+        <h1 style={s.title}>{t('demo.title')}</h1>
+        <p style={s.subtitle}>{t('demo.subtitle')}</p>
 
         <form onSubmit={handleSubmit}>
-          <input style={s.input} type="password" placeholder="Password demo" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="off" />
+          <input style={s.input} type="password" placeholder={t('demo.passwordPlaceholder')} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="off" />
           {error && <div style={s.error}>❌ {error}</div>}
           <button style={{ ...s.btn, opacity: loading ? 0.6 : 1 }} type="submit" disabled={loading}>
-            {loading ? '⏳ Verifica...' : '🎮 Inizia la Demo'}
+            {loading ? `⏳ ${t('demo.verifying')}` : `🎮 ${t('demo.startDemo')}`}
           </button>
         </form>
-        <a href="/" style={s.back}>← Torna alla home</a>
+        <a href="/" style={s.back}>← {t('app.backHome')}</a>
       </div>
     </div>
   );

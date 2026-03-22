@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../lib/api';
+import { useI18n } from '../i18n/I18nContext';
 
 const s = {
   container: { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', animation: 'fadeIn 0.5s ease' },
@@ -21,6 +22,7 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const { auth, login } = useAuth();
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   if (auth?.role === 'admin') {
     navigate('/admin/console', { replace: true });
@@ -49,18 +51,18 @@ export default function AdminLogin() {
     <div style={s.container}>
       <div style={s.card}>
         <div style={{ fontSize: '48px', marginBottom: '16px' }}>👩‍🏫</div>
-        <h1 style={s.title}>Area Insegnante</h1>
-        <p style={s.subtitle}>Accedi per gestire le sessioni</p>
+        <h1 style={s.title}>{t('admin.title')}</h1>
+        <p style={s.subtitle}>{t('admin.subtitle')}</p>
 
         <form onSubmit={handleSubmit}>
-          <input style={s.input} type="text" placeholder="Nome utente" value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="username" />
-          <input style={s.input} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
+          <input style={s.input} type="text" placeholder={t('admin.username')} value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="username" />
+          <input style={s.input} type="password" placeholder={t('admin.password')} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
           {error && <div style={s.error}>❌ {error}</div>}
           <button style={{ ...s.btn, opacity: loading ? 0.6 : 1 }} type="submit" disabled={loading}>
-            {loading ? '⏳ Accesso...' : '🔐 Accedi'}
+            {loading ? `⏳ ${t('admin.loggingIn')}` : `🔐 ${t('admin.login')}`}
           </button>
         </form>
-        <a href="/" style={s.back}>← Torna alla home</a>
+        <a href="/" style={s.back}>← {t('app.backHome')}</a>
       </div>
     </div>
   );

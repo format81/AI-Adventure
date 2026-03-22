@@ -1,0 +1,29 @@
+{
+  "title": "Fake Detective",
+  "emoji": "🔎",
+  "description": "AI can create very convincing fake news. A good digital detective knows how to spot the clues!",
+  "rules": "Read the news and find the 2 SUSPICIOUS CLUES that reveal it's fake news.",
+  "pointsPerCorrect": 15,
+  "questions": [
+    {
+      "claim": "BREAKING NEWS: Schools closed nationwide tomorrow due to incoming meteorite! The President says so!",
+      "options": [
+        { "id": 0, "text": "📅 'Tomorrow' — the date is too close", "isFake": false },
+        { "id": 1, "text": "☄️ 'Incoming meteorite' — too sensational", "isFake": true },
+        { "id": 2, "text": "🏫 'Schools closed' — could be true", "isFake": false },
+        { "id": 3, "text": "🗣️ 'The President says so' — doesn't cite real source", "isFake": true }
+      ],
+      "explanation": "Fake news uses SENSATIONAL tones and cites vague sources. Always ask: where can I verify this? 🔎"
+    },
+    {
+      "claim": "A new scientific study proves that eating chocolate every day makes you 200% smarter!",
+      "options": [
+        { "id": 0, "text": "🔬 'A new study' — doesn't say which study", "isFake": true },
+        { "id": 1, "text": "🍫 'Chocolate' — chocolate really exists", "isFake": false },
+        { "id": 2, "text": "📊 '200%' — exaggerated and impossible number", "isFake": true },
+        { "id": 3, "text": "🧠 'Smarter' — intelligence is real", "isFake": false }
+      ],
+      "explanation": "Exaggerated numbers and vague sources ('a new study...') are signs of fake news! 🚩"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Confetti from '../Confetti';
+import { useI18n } from '../../i18n/I18nContext';
 
 const btnBase = {
   width: '100%', padding: '20px 24px', fontSize: '20px', fontWeight: 800,
@@ -7,14 +8,15 @@ const btnBase = {
   textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
 };
 
-const colors = {
-  verde: { bg: 'rgba(78,205,196,0.15)', border: '#4ECDC4', label: '🟢 VERDE — Ottimo!' },
-  giallo: { bg: 'rgba(255,230,109,0.15)', border: '#FFE66D', label: '🟡 GIALLO — Attenzione!' },
-  rosso: { bg: 'rgba(255,107,107,0.15)', border: '#FF6B6B', label: '🔴 ROSSO — Pericolo!' },
-};
-
 export default function Game2TrafficLight({ question, onAnswer, showResult, result }) {
   const [selected, setSelected] = useState(null);
+  const { t } = useI18n();
+
+  const colors = {
+    verde: { bg: 'rgba(78,205,196,0.15)', border: '#4ECDC4', label: `🟢 ${t('game2.green')}` },
+    giallo: { bg: 'rgba(255,230,109,0.15)', border: '#FFE66D', label: `🟡 ${t('game2.yellow')}` },
+    rosso: { bg: 'rgba(255,107,107,0.15)', border: '#FF6B6B', label: `🔴 ${t('game2.red')}` },
+  };
 
   const handleSelect = (answer) => {
     if (showResult) return;
@@ -65,7 +67,7 @@ export default function Game2TrafficLight({ question, onAnswer, showResult, resu
         }}>
           <div style={{ fontSize: '28px', marginBottom: '8px' }}>{result?.correct ? '✅' : '❌'}</div>
           <p style={{ fontSize: '18px', lineHeight: 1.5 }}>{result?.explanation}</p>
-          {result?.points > 0 && <p style={{ fontSize: '20px', fontWeight: 800, color: '#FFE66D', marginTop: '8px' }}>+{result.points} punti! 🎉</p>}
+          {result?.points > 0 && <p style={{ fontSize: '20px', fontWeight: 800, color: '#FFE66D', marginTop: '8px' }}>+{result.points} {t('app.points')}! 🎉</p>}
         </div>
       )}
     </div>
