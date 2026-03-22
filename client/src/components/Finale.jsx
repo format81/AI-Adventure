@@ -30,6 +30,16 @@ export default function Finale({ totalPoints, totalCorrect, totalQuestions }) {
         </div>
       </div>
 
+      <div style={{
+        margin: '0 auto 24px', padding: '20px 24px', borderRadius: '16px', maxWidth: '500px',
+        background: 'linear-gradient(135deg, rgba(249,115,22,0.15), rgba(255,230,109,0.15))',
+        border: '2px solid rgba(249,115,22,0.3)',
+      }}>
+        <p style={{ fontSize: '24px', fontWeight: 900, lineHeight: 1.4, background: 'linear-gradient(135deg, #F97316, #FFE66D)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          {t('finale.slogan')}
+        </p>
+      </div>
+
       <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.7)', maxWidth: '500px', margin: '0 auto', lineHeight: 1.6 }}>
         {t('finale.closingMessage')} 🧠✨
       </p>

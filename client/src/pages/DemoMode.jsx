@@ -23,6 +23,7 @@ export default function DemoMode() {
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
+  const [questionStartTime, setQuestionStartTime] = useState(Date.now());
   const navigate = useNavigate();
   const { t } = useI18n();
 
@@ -38,34 +39,44 @@ export default function DemoMode() {
   const questions = gameData?.questions || [];
   const currentQ = questions[questionIdx];
 
+  const computeTimeBonus = (ms) => {
+    if (ms <= 3000) return 5;
+    if (ms >= 15000) return 0;
+    return Math.round(5 * (1 - (ms - 3000) / 12000));
+  };
+
   const handleAnswer = (answer) => {
     if (showResult) return;
+    const responseTimeMs = Date.now() - questionStartTime;
     // Client-side validation for demo
     let correct = false;
     let explanation = '';
-    let points = 0;
+    let basePoints = 0;
 
     if (gameKey === 'game1') {
       correct = answer === currentQ.answer;
       explanation = currentQ.explanation;
-      points = correct ? gameData.pointsPerCorrect : 0;
+      basePoints = correct ? gameData.pointsPerCorrect : 0;
     } else if (gameKey === 'game2') {
       correct = answer === currentQ.answer;
       explanation = currentQ.explanation;
-      points = correct ? gameData.pointsPerCorrect : 0;
+      basePoints = correct ? gameData.pointsPerCorrect : 0;
     } else if (gameKey === 'game3') {
       const fakeIds = currentQ.options.filter(o => o.isFake).map(o => o.id).sort();
       const answerIds = Array.isArray(answer) ? [...answer].sort() : [];
       correct = JSON.stringify(answerIds) === JSON.stringify(fakeIds);
       explanation = currentQ.explanation;
-      points = correct ? gameData.pointsPerCorrect : 0;
+      basePoints = correct ? gameData.pointsPerCorrect : 0;
     } else if (gameKey === 'game4') {
       correct = answer === currentQ.type;
       explanation = `${currentQ.emoji} ${currentQ.text}`;
-      points = correct ? gameData.pointsPerCorrect : 0;
+      basePoints = correct ? gameData.pointsPerCorrect : 0;
     }
 
-    setResult({ correct, explanation, points });
+    const timeBonus = correct ? computeTimeBonus(responseTimeMs) : 0;
+    const points = basePoints + timeBonus;
+
+    setResult({ correct, explanation, points, timeBonus });
     setShowResult(true);
     setTotalPoints(prev => prev + points);
     setTotalCorrect(prev => prev + (correct ? 1 : 0));
@@ -77,11 +88,13 @@ export default function DemoMode() {
       setQuestionIdx(questionIdx + 1);
       setShowResult(false);
       setResult(null);
+      setQuestionStartTime(Date.now());
     } else {
       setStageIdx(stageIdx + 1);
       setQuestionIdx(0);
       setShowResult(false);
       setResult(null);
+      setQuestionStartTime(Date.now());
     }
   };
 

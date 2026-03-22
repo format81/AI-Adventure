@@ -34,6 +34,7 @@ export default function StudentPlay() {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [waitingForNext, setWaitingForNext] = useState(false);
   const [scores, setScores] = useState([]);
+  const [questionStartTime, setQuestionStartTime] = useState(Date.now());
 
   const teamInfo = (() => {
     try { return JSON.parse(sessionStorage.getItem('ai-avventura-team')); } catch { return null; }
@@ -62,6 +63,7 @@ export default function StudentPlay() {
       setShowResult(false);
       setResult(null);
       setWaitingForNext(false);
+      setQuestionStartTime(Date.now());
       refreshScores();
     },
     onSessionPause: () => setStatus('paused'),
@@ -88,29 +90,15 @@ export default function StudentPlay() {
     );
   }
 
-  // Completed / finale
+  // Completed / finale — students only see their own score
   if (status === 'completed' || stage === 'finale') {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
         <div style={card}>
           <Finale totalPoints={totalPoints} totalCorrect={totalCorrect} totalQuestions={totalQuestions} />
-          {scores.length > 0 && (
-            <div style={{ marginTop: '24px' }}>
-              <h3 style={{ fontSize: '22px', fontWeight: 800, textAlign: 'center', marginBottom: '16px' }}>🏆 {t('admin.scoreboard')}</h3>
-              {scores.map((sc, i) => (
-                <div key={sc.id} style={{
-                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  padding: '12px 16px', background: sc.id === teamInfo.teamId ? 'rgba(249,115,22,0.15)' : 'rgba(255,255,255,0.04)',
-                  borderRadius: '12px', marginBottom: '8px', border: sc.id === teamInfo.teamId ? '2px solid #F97316' : '1px solid rgba(255,255,255,0.05)',
-                }}>
-                  <span style={{ fontSize: '18px', fontWeight: 700 }}>
-                    {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}.`} {sc.name}
-                  </span>
-                  <span style={{ fontSize: '20px', fontWeight: 800, color: '#FFE66D' }}>{sc.total_points} {t('app.pt')}</span>
-                </div>
-              ))}
-            </div>
-          )}
+          <div style={{ textAlign: 'center', marginTop: '16px', padding: '16px', background: 'rgba(167,139,250,0.1)', borderRadius: '12px', fontSize: '18px', color: '#A78BFA' }}>
+            {t('finale.waitForLeaderboard')}
+          </div>
         </div>
       </div>
     );
@@ -156,6 +144,7 @@ export default function StudentPlay() {
 
   const handleAnswer = async (answer) => {
     if (showResult) return;
+    const responseTimeMs = Date.now() - questionStartTime;
     try {
       const res = await apiFetch('/game/respond', {
         method: 'POST',
@@ -165,6 +154,7 @@ export default function StudentPlay() {
           game: gameKey,
           questionIndex,
           answer,
+          responseTimeMs,
         }),
       });
       setResult(res);

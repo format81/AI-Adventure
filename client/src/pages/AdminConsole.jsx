@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../lib/api';
 import { useSSE } from '../hooks/useSSE';
 import { useI18n } from '../i18n/I18nContext';
+import LeaderboardReveal from '../components/LeaderboardReveal';
 
 const card = { background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '20px', padding: '24px' };
 const btnPrimary = { padding: '16px 28px', fontSize: '18px', fontWeight: 800, borderRadius: '16px', background: 'linear-gradient(135deg, #F97316, #FFE66D)', color: '#1a1a2e', minHeight: '56px', boxShadow: '0 4px 20px rgba(249,115,22,0.3)' };
@@ -29,6 +30,7 @@ export default function AdminConsole() {
   const [scores, setScores] = useState([]);
   const [responseCount, setResponseCount] = useState(0);
   const [results, setResults] = useState(null);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   const statusLabels = {
     lobby: `🔵 ${t('status.lobby')}`,
@@ -297,9 +299,14 @@ export default function AdminConsole() {
                   </button>
                 )}
                 {selected.current_stage === 'finale' && (
-                  <button onClick={completeSession} style={{ ...btnPrimary, width: '100%' }}>
-                    ✅ {t('admin.completeSession')}
-                  </button>
+                  <>
+                    <button onClick={() => setShowLeaderboard(true)} style={{ ...btnPrimary, width: '100%' }}>
+                      🏆 {t('admin.projectLeaderboard')}
+                    </button>
+                    <button onClick={completeSession} style={{ ...btnPrimary, width: '100%' }}>
+                      ✅ {t('admin.completeSession')}
+                    </button>
+                  </>
                 )}
                 <button onClick={pauseSession} style={{ ...btnSecondary, width: '100%' }}>⏸️ {t('admin.pause')}</button>
               </div>
@@ -317,6 +324,7 @@ export default function AdminConsole() {
               <div style={{ fontSize: '48px', marginBottom: '12px' }}>🏆</div>
               <p style={{ fontSize: '18px', fontWeight: 700, marginBottom: '16px' }}>{t('admin.sessionComplete')}</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <button onClick={() => setShowLeaderboard(true)} style={{ ...btnPrimary, width: '100%' }}>🏆 {t('admin.projectLeaderboard')}</button>
                 <button onClick={() => loadResults(selected.id)} style={{ ...btnPrimary, width: '100%' }}>📊 {t('admin.viewResults')}</button>
                 <button onClick={() => downloadCSV(selected.id)} style={{ ...btnSecondary, width: '100%' }}>📥 {t('admin.exportCSV')}</button>
               </div>
@@ -347,6 +355,9 @@ export default function AdminConsole() {
           )}
         </div>
       </div>
+
+      {/* Leaderboard reveal overlay */}
+      {showLeaderboard && <LeaderboardReveal scores={scores} onClose={() => setShowLeaderboard(false)} />}
 
       {/* Results panel */}
       {results && (

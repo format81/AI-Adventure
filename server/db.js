@@ -48,9 +48,17 @@ db.exec(`
     answer TEXT NOT NULL,
     correct INTEGER NOT NULL,
     points INTEGER NOT NULL,
+    response_time_ms INTEGER DEFAULT 0,
     responded_at TEXT DEFAULT (datetime('now'))
   );
 `);
+
+// Migration: add response_time_ms column if missing
+try {
+  db.exec(`ALTER TABLE responses ADD COLUMN response_time_ms INTEGER DEFAULT 0`);
+} catch (e) {
+  // Column already exists — ignore
+}
 
 // Prepared statements
 const stmts = {
@@ -84,7 +92,7 @@ const stmts = {
   countTeams: db.prepare('SELECT COUNT(*) as count FROM teams WHERE session_id = ?'),
 
   // Responses
-  createResponse: db.prepare('INSERT INTO responses (id, session_id, team_id, game, question_index, answer, correct, points) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'),
+  createResponse: db.prepare('INSERT INTO responses (id, session_id, team_id, game, question_index, answer, correct, points, response_time_ms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'),
   getResponse: db.prepare('SELECT * FROM responses WHERE session_id = ? AND team_id = ? AND game = ? AND question_index = ?'),
   getTeamScores: db.prepare(`
     SELECT t.id, t.name, COALESCE(SUM(r.points), 0) as total_points, COUNT(r.id) as total_responses, SUM(r.correct) as correct_responses

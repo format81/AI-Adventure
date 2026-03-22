@@ -63,9 +63,20 @@ router.get('/:sessionId/state', (req, res) => {
   });
 });
 
+// Time bonus: max 5 bonus points for fast answers (only on correct)
+// Under 3s = +5, over 15s = +0, linear in between
+function computeTimeBonus(responseTimeMs) {
+  const MIN_TIME = 3000;
+  const MAX_TIME = 15000;
+  const MAX_BONUS = 5;
+  if (responseTimeMs <= MIN_TIME) return MAX_BONUS;
+  if (responseTimeMs >= MAX_TIME) return 0;
+  return Math.round(MAX_BONUS * (1 - (responseTimeMs - MIN_TIME) / (MAX_TIME - MIN_TIME)));
+}
+
 // POST /api/game/respond — submit answer
 router.post('/respond', (req, res) => {
-  const { sessionId, teamId, game, questionIndex, answer } = req.body;
+  const { sessionId, teamId, game, questionIndex, answer, responseTimeMs } = req.body;
   if (!sessionId || !teamId || !game || questionIndex === undefined || answer === undefined) {
     return res.status(400).json({ error: msg(req, 'incompleteData') });
   }
@@ -88,16 +99,19 @@ router.post('/respond', (req, res) => {
   }
 
   // Validate and score the answer
-  const { correct, points, explanation } = validateAnswer(game, questionIndex, answer);
+  const { correct, points: basePoints, explanation } = validateAnswer(game, questionIndex, answer);
+  const timeMs = Math.max(0, parseInt(responseTimeMs) || 0);
+  const timeBonus = correct ? computeTimeBonus(timeMs) : 0;
+  const points = basePoints + timeBonus;
 
   const responseId = uuidv4();
-  stmts.createResponse.run(responseId, sessionId, teamId, game, questionIndex, JSON.stringify(answer), correct ? 1 : 0, points);
+  stmts.createResponse.run(responseId, sessionId, teamId, game, questionIndex, JSON.stringify(answer), correct ? 1 : 0, points, timeMs);
 
   // Broadcast response count update
   const responseCount = stmts.getResponseCountForQuestion.get(sessionId, game, questionIndex).count;
   broadcast(sessionId, 'response:received', { game, questionIndex, responseCount });
 
-  res.json({ correct, points, explanation });
+  res.json({ correct, points, timeBonus, explanation });
 });
 
 // GET /api/game/:sessionId/scores — live scoreboard

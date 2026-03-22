@@ -57,7 +57,8 @@
     "noScoresYet": "Nessun punteggio ancora",
     "detailedResults": "Risultati Dettagliati",
     "correctByGame": "Percentuale risposte corrette per gioco",
-    "downloadFullCSV": "Scarica CSV completo"
+    "downloadFullCSV": "Scarica CSV completo",
+    "projectLeaderboard": "Proietta Classifica"
   },
   "demo": {
     "title": "Modalit\u00e0 Demo",
@@ -99,7 +100,10 @@
     "keepGoing": "Continuate a esplorare il mondo dell'AI!",
     "totalPoints": "Punti totali",
     "correctAnswers": "Risposte corrette",
-    "closingMessage": "Ricordate: l'AI \u00e8 uno strumento potente. Usatela con intelligenza, verificate sempre le informazioni e non dimenticate di pensare con la vostra testa!"
+    "closingMessage": "Ricordate: l'AI \u00e8 uno strumento potente. Usatela con intelligenza, verificate sempre le informazioni e non dimenticate di pensare con la vostra testa!",
+    "slogan": "\u00abTu pensi. L'AI aiuta. E tu controlli!\u00bb",
+    "speedBonus": "velocit\u00e0",
+    "waitForLeaderboard": "La maestra sta per mostrare la classifica... Restate pronti!"
   },
   "game1": {
     "human": "Scritto da un UMANO",
@@ -118,6 +122,14 @@
   "game4": {
     "superpower": "SUPERPOTERE",
     "superdanger": "SUPERPERICOLO"
+  },
+  "leaderboard": {
+    "title": "Classifica Finale",
+    "reveal3rd": "Svela il terzo posto!",
+    "reveal2nd": "Svela il secondo posto!",
+    "reveal1st": "Svela il primo posto!",
+    "champion": "Campione dell'Avventura AI!",
+    "close": "Chiudi classifica"
   },
   "status": {
     "lobby": "In attesa",

@@ -57,7 +57,8 @@
     "noScoresYet": "No scores yet",
     "detailedResults": "Detailed Results",
     "correctByGame": "Correct answers percentage by game",
-    "downloadFullCSV": "Download full CSV"
+    "downloadFullCSV": "Download full CSV",
+    "projectLeaderboard": "Project Leaderboard"
   },
   "demo": {
     "title": "Demo Mode",
@@ -99,7 +100,10 @@
     "keepGoing": "Keep exploring the world of AI!",
     "totalPoints": "Total points",
     "correctAnswers": "Correct answers",
-    "closingMessage": "Remember: AI is a powerful tool. Use it wisely, always verify information, and don't forget to think with your own head!"
+    "closingMessage": "Remember: AI is a powerful tool. Use it wisely, always verify information, and don't forget to think with your own head!",
+    "slogan": "\u00abYou think. AI helps. And you control!\u00bb",
+    "speedBonus": "speed",
+    "waitForLeaderboard": "The teacher is about to show the leaderboard... Stay ready!"
   },
   "game1": {
     "human": "Written by a HUMAN",
@@ -118,6 +122,14 @@
   "game4": {
     "superpower": "SUPERPOWER",
     "superdanger": "SUPERDANGER"
+  },
+  "leaderboard": {
+    "title": "Final Leaderboard",
+    "reveal3rd": "Reveal third place!",
+    "reveal2nd": "Reveal second place!",
+    "reveal1st": "Reveal first place!",
+    "champion": "AI Adventure Champion!",
+    "close": "Close leaderboard"
   },
   "status": {
     "lobby": "Waiting",

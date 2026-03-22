@@ -86,7 +86,7 @@ export default function Game3FakeDetective({ question, onAnswer, showResult, res
         }}>
           <div style={{ fontSize: '28px', marginBottom: '8px' }}>{result?.correct ? '✅' : '❌'}</div>
           <p style={{ fontSize: '18px', lineHeight: 1.5 }}>{result?.explanation}</p>
-          {result?.points > 0 && <p style={{ fontSize: '20px', fontWeight: 800, color: '#FFE66D', marginTop: '8px' }}>+{result.points} {t('app.points')}! 🎉</p>}
+          {result?.points > 0 && <p style={{ fontSize: '20px', fontWeight: 800, color: '#FFE66D', marginTop: '8px' }}>+{result.points} {t('app.points')}{result.timeBonus > 0 ? ` (⚡+${result.timeBonus} ${t('finale.speedBonus')})` : ''} 🎉</p>}
         </div>
       )}
     </div>
