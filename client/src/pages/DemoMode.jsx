@@ -147,7 +147,7 @@ export default function DemoMode() {
         </div>
 
         {/* Game component */}
-        <GameComponent question={currentQ} onAnswer={handleAnswer} showResult={showResult} result={result} />
+        <GameComponent key={`${gameKey}-${questionIdx}`} question={currentQ} onAnswer={handleAnswer} showResult={showResult} result={result} />
 
         {/* Next button */}
         {canAdvance && stage !== 'intro' && (
